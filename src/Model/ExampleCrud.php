@@ -35,7 +35,11 @@ class ExampleCrud
     #[OA\Property(type: "integer", format: "int32", nullable: true)]
     protected ?int $code = null;
 
-
+    /**
+     * @return int|null
+     */
+    #[OA\Property(type: "string", format: "string", nullable: true)]
+    protected ?string $status = null;
 
     /**
      * @return int|null
@@ -109,5 +113,13 @@ class ExampleCrud
         return $this;
     }
 
-
+    /**
+     * @param string|null $status
+     * @return ExampleCrud
+     */
+    public function setStatus(?string $status): ExampleCrud
+    {
+        $this->status = $status;
+        return $this;
+    }
 }
