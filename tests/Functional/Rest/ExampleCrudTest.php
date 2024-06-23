@@ -203,4 +203,23 @@ class ExampleCrudTest extends BaseApiTestCase
         ;
         $this->assertRequest($request);
     }
+
+    public function testUpdateStatus(): void
+    {
+        $result = json_decode($this->assertRequest(Credentials::requestLogin(Credentials::getAdminUser()))->getBody()->getContents(), true);
+
+        $request = new FakeApiRequester();
+        $request
+            ->withPsr7Request($this->getPsr7Request())
+            ->withMethod('PUT')
+            ->withPath("/example/crud/status")
+            ->withRequestBody(json_encode(['id' => 1, 'status' => 'new status']))
+            ->assertResponseCode(200)
+            ->withRequestHeader([
+                "Authorization" => "Bearer " . $result['token']
+            ])
+        ;
+
+        $bodyAr = json_decode($this->assertRequest($request)->getBody()->getContents(), true);
+    }
 }
