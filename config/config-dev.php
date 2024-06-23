@@ -24,13 +24,14 @@ use ByJG\RestServer\OutputProcessor\JsonCleanOutputProcessor;
 use ByJG\RestServer\Route\OpenApiRouteList;
 use ByJG\Util\JwtKeySecret;
 use ByJG\Util\JwtWrapper;
-use Psr\Log\LoggerInterface;
-use Psr\Log\NullLogger;
 use Fern\Model\User;
 use Fern\Psr11;
 use Fern\Repository\DummyHexRepository;
 use Fern\Repository\DummyRepository;
+use Fern\Repository\ExampleCrudRepository;
 use Fern\Repository\UserDefinition as UserDefinitionAlias;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
 return [
 
@@ -50,7 +51,7 @@ return [
         ->toSingleton(),
 
     JwtKeySecret::class => DI::bind(JwtKeySecret::class)
-        ->withConstructorArgs(['6KQg1IssnWoARlXx/fDo3ale+qrw6LJA/OUyJOakJQfTQw6KawCSzLJgt9ddl4SqUMrVRnJQKRy9yW85KXTMOw=='])
+        ->withConstructorArgs(['jwt_super_secret_key'])
         ->toSingleton(),
 
     JwtWrapper::class => DI::bind(JwtWrapper::class)
@@ -146,6 +147,9 @@ return [
 //        ->withMethodCall("withDetailedErrorHandler", [])
         ->toSingleton(),
 
+    ExampleCrudRepository::class => DI::bind(ExampleCrudRepository::class)
+        ->withInjectedConstructor()
+        ->toSingleton(),
     // ----------------------------------------------------------------------------
 
     'MAIL_ENVELOPE' => function ($to, $subject, $template, $mapVariables = []) {
@@ -161,5 +165,4 @@ return [
         }
         return new Envelope(Psr11::container()->get('EMAIL_TRANSACTIONAL_FROM'), $to, $prefix . $subject, $body, true);
     },
-
 ];
