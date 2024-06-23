@@ -673,6 +673,66 @@
                 ]
             }
         },
+        "/example/crud/status": {
+            "put": {
+                "tags": [
+                    "Example"
+                ],
+                "summary": "Update an existing ExampleCrud status",
+                "description": "Update the status of the ExampleCrud",
+                "operationId": "PUT::/example/crud/status::Fern\\Rest\\ExampleCrudRest::putExampleCrudStatus",
+                "requestBody": {
+                    "description": "The status to be updated",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "status"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "format": "int32"
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "format": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "The object rto be created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "required": [
+                                        "result"
+                                    ],
+                                    "properties": {
+                                        "result": {
+                                            "type": "string",
+                                            "format": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "jwt-token": []
+                    }
+                ]
+            }
+        },
         "/login": {
             "post": {
                 "tags": [
